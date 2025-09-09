@@ -21,4 +21,15 @@ const getMovie = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies, getMovie };
+const createMovie = async (req, res) => {
+    try {
+        const { title, genero, ano_lancamento, sinopse } = req.body;
+        const photo = req.file ? req.file.filename : null;
+        const newMovie = await movieModel.createMovie(photo, title, genero, ano_lancamento, sinopse);
+        res.status(201).json(newMovie);
+    } catch (error) {
+        res.status(400).json({ message: "Erro ao criar filme 🍿"});
+    }
+}
+
+module.exports = { getAllMovies, getMovie, createMovie };
