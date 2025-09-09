@@ -45,4 +45,16 @@ const updateMovie = async (req, res) => {
     }
 };
 
-module.exports = { getAllMovies, getMovie, createMovie, updateMovie };
+const deleteMovie = async (req, res) => {
+    try {
+        const movie = await movieModel.deleteMovie(req.params.id);
+        if (!movie) {
+            return res.status(404).json({ message: "Filme não encontrado 🎬"});
+        }
+        return res.status(200).json({ message: "Filme deletado com sucesso 🎬", movie });
+    } catch (error) {
+        res.status(400).json({ message: "Erro ao deletar filme 🎬"});
+    }
+};
+
+module.exports = { getAllMovies, getMovie, createMovie, updateMovie, deleteMovie };
