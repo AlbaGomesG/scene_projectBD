@@ -30,6 +30,19 @@ const createMovie = async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: "Erro ao criar filme 🍿"});
     }
-}
+};
 
-module.exports = { getAllMovies, getMovie, createMovie };
+const updateMovie = async (req, res) => {
+    try {
+        const { sinopse } = req.body;
+        const updateMovie = await movieModel.updateMovie(req.params.id, sinopse);
+        if (!updateMovie) {
+            return res.status(404).json({ message: "Filme não encontrado 🎞️"});
+        }
+        res.json(updateMovie);
+    } catch (error) {
+        res.status(400).json({ message: "Erro ao atualizar filme 🎞️"});
+    }
+};
+
+module.exports = { getAllMovies, getMovie, createMovie, updateMovie };
